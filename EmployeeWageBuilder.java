@@ -1,55 +1,79 @@
 // Employee Wage Computation Problem //
 
-class Wage_Cal{
-	public static final int Is_Full_Time = 1 ;
-	public static final int Is_Part_Time = 2;
-	public static final int Total_Work_Day = 20;
-	static final int Total_Working_Hr_Month = 100;
-	int emp_FullDay_Hr = 0 ;
-	int emp_Wage = 0 ;
-	int total_EmpWage=0;		
-	int total_working_day=0;
-	int total_empHrs = 0;
-	
-	public void wage_Compute(int Emp_Rate_PerHr){
-			emp_Wage = Emp_Rate_PerHr * emp_FullDay_Hr ;		
+class EmployeeWageBuilder {
+	private String company;
+	private int emp_Rate_PerHr;
+	private int total_Work_Day;
+	private int working_Hrs;
+
+	public String getCompany(){
+		return company;
 	}
-	public void wage_display(String company){
-		System.out.println("Wages for " + company);
-		System.out.println("Totla Working hours " + total_empHrs );
-		System.out.println("Employee Total wage For a Month : " + total_EmpWage);
+
+	public int gettotal_Work_Day(){
+		return total_Work_Day;
 	}
-	public void emp_Wage_Cal(String company, int Emp_Rate_PerHr){
-		while(total_working_day < Total_Work_Day && total_empHrs < Total_Working_Hr_Month ){
-			total_working_day++;
-			int empCheck = (int) Math.floor(Math.random()*10) % 3 ;		
+	public int getworking_Hrs(){
+		return working_Hrs;
+	}
+
+	public int getEmp_Rate_PerHr(){
+		return emp_Rate_PerHr;
+	}
+
+	public EmployeeWageBuilder (String company,int total_Work_Day,int working_Hrs,int emp_Rate_PerHr){
+		this.company = company;
+		this.total_Work_Day = total_Work_Day;
+		this.working_Hrs = working_Hrs;
+		this.emp_Rate_PerHr = emp_Rate_PerHr;
+	}
+		
+	public void emp_EmployeeWageBuilder(int emp_Rate_PerHr){
+		int emp_FullDay_Hr = 0 ;
+		int emp_Wage = 0 ;
+		int total_EmpWage=0;		
+		int total_working_day=0;
+		int empCheck = (int) Math.floor(Math.random()*10) % 3 ;		
 			switch (empCheck){
-				case Is_Full_Time :
+				case 0 :
 					emp_FullDay_Hr = 8;
 				break ;
-		    	case Is_Part_Time :
+		    	case 1 :
 					emp_FullDay_Hr = 4 ;
 				break ;
 				default:
 					emp_FullDay_Hr = 0;
 				break ;
 			}
-			total_EmpWage += emp_Wage ;
-			total_empHrs += emp_FullDay_Hr;
-			wage_Compute(Emp_Rate_PerHr);	
-		}	
-			wage_display(company);
+		int dailyWage = dailyWageCompute(working_Hrs,emp_Rate_PerHr);
+		System.out.println("Daily full time employee wage is " + dailyWage);
+		int monthlyWage = 20 * dailyWage;
+		System.out.println("Monthly wage of an employee is " + monthlyWage);
 	}
-}
-class EmployeeWageBuilder {
-	public static void welcome(){
+
+	public static int dailyWageCompute(int working_Hrs, int emp_Rate_PerHr) {
+		int dailyWage = emp_Rate_PerHr * working_Hrs;
+		return dailyWage;
+
+	}
+
+	public static int monthlyWageCompute(EmployeeWageBuilder empwagecompute) {
+
+		int dailyWage = dailyWageCompute(empwagecompute.working_Hrs, empwagecompute.emp_Rate_PerHr);
+		return dailyWage * empwagecompute.total_Work_Day;
+	}	
+			
+	
+public static void welcome(){
 		System.out.println("Welcome To Employee Wage Computation ");
 	}
 	public static void main(String[] args){
 		welcome();
-		Wage_Cal d_wagecal= new Wage_Cal();
-		Wage_Cal k_wagecal= new Wage_Cal();
-		d_wagecal.emp_Wage_Cal("Dmart",20);
-		k_wagecal.emp_Wage_Cal("Kmart",20);
+		EmployeeWageBuilder d_wagecal= new EmployeeWageBuilder("Dmart", 8, 11, 20);
+		System.out.print("Company " + d_wagecal.getCompany() + " Total wage is ");
+		System.out.println(monthlyWageCompute(d_wagecal));
+		EmployeeWageBuilder k_wagecal= new EmployeeWageBuilder("Kmart", 10, 8,15);
+		System.out.print("Company " + d_wagecal.getCompany() + " Total wage is ");
+		System.out.println(monthlyWageCompute(k_wagecal));
 	}
 }
