@@ -2,12 +2,18 @@
 import java.util.*;
 class EmployeeWageBuilder implements IEmpWage{
 	private LinkedList<EmployeeWageCompute> companyEmpWageList;
+	
+	private Map<String,EmployeeWageCompute> companyToEmpWageMap;
+
 	public void EmployeeWageBuilder() {
 	  companyEmpWageList = new LinkedList<>();
+	  companyToEmpWageMap = new HashMap<>();
 	}
 	
 	public void addCompanyEmpWage(String company,int emp_Rate_PerHr,int total_Work_Day,int working_Hrs)  {
-		companyEmpWageList.add(new EmployeeWageCompute(company,emp_Rate_PerHr,total_Work_Day,working_Hrs));
+		EmployeeWageCompute employeeWageCompute = new EmployeeWageCompute(company,emp_Rate_PerHr,total_Work_Day,working_Hrs);
+		companyEmpWageList.add(employeeWageCompute);
+		companyToEmpWageMap.put(company,employeeWageCompute);
 	}
 	
 	public void computeEmpWage() {
@@ -25,9 +31,10 @@ public static void welcome(){
 	public static void main(String[] args){
 		welcome();
 		EmployeeWageBuilder emp = new EmployeeWageBuilder();
-		emp.addCompanyEmpWage("dsdas",10,5,5);
+		emp.addCompanyEmpWage("Dmart",10,5,5);
 		emp.addCompanyEmpWage("Kmart",10,2,9);
 		emp.computeEmpWage();
+		System.out.println("Total wage for Dmart is " + emp.getTotalWage("Dmart"));
 	}
 
 	public static void wageComputeforEmp(int emp_Rate_PerHr){
@@ -56,6 +63,9 @@ public static void welcome(){
 		int dailyWage = emp_Rate_PerHr * working_Hrs;
 		return dailyWage;
 
+	}public int getTotalWage(String companyName) {
+
+		return companyToEmpWageMap.get(companyName).getTotalWage();
 	}
 
 	public static int monthlyWageCompute(EmployeeWageCompute employeeWageCompute) {
