@@ -1,21 +1,20 @@
 // Employee Wage Computation Problem 
+import java.util.*;
 class EmployeeWageBuilder implements IEmpWage{
-	private int numOfCompany=0;
-	private EmployeeWageCompute[] companyEmpWageArray;
-	
+	private LinkedList<EmployeeWageCompute> companyEmpWageList;
 	public void EmployeeWageBuilder() {
-	  companyEmpWageArray = new EmployeeWageCompute[5];
+	  companyEmpWageList = new LinkedList<>();
 	}
 	
-	public void addCompanyEmpWage(String company, int emp_Rate_PerHr, int total_Work_Day, int working_Hrs)  {
-		companyEmpWageArray[numOfCompany]= new EmployeeWageCompute(company, emp_Rate_PerHr, total_Work_Day, working_Hrs);
-		numOfCompany++;
+	public void addCompanyEmpWage(String company,int emp_Rate_PerHr,int total_Work_Day,int working_Hrs)  {
+		companyEmpWageList.add(new EmployeeWageCompute(company,emp_Rate_PerHr,total_Work_Day,working_Hrs));
 	}
 	
 	public void computeEmpWage() {
-		for(int i =0;i<numOfCompany;i++) {
-			companyEmpWageArray[i].setTotalWage(this.monthlyWageCompute(companyEmpWageArray[i]));
-			System.out.println(companyEmpWageArray[i]);
+		for(int i =0;i<companyEmpWageList.size();i++) {
+		EmployeeWageCompute employeeWageCompute = companyEmpWageList.get(i);
+		employeeWageCompute.setTotalWage(this.monthlyWageCompute(employeeWageCompute));
+		System.out.println(employeeWageCompute);
 		}
 	}
 	
@@ -25,8 +24,8 @@ public static void welcome(){
 	public static void main(String[] args){
 		welcome();
 		EmployeeWageBuilder emp = new EmployeeWageBuilder();
-		emp.addCompanyEmpWage("Dmart", 5, 15, 7);
-		emp.addCompanyEmpWage("Kmart", 10, 20, 9);
+		emp.addCompanyEmpWage("dsdas",10,5,5);
+		emp.addCompanyEmpWage("Kmart",10,2,9);
 		emp.computeEmpWage();
 	}
 
@@ -52,7 +51,7 @@ public static void welcome(){
 		System.out.println("Monthly wage of an employee is " + monthlyWage);
 	}
 
-	public static int dailyWageCompute(int emp_Rate_PerHr,int working_Hrs) {
+	public static int dailyWageCompute(int working_Hrs,int emp_Rate_PerHr) {
 		int dailyWage = emp_Rate_PerHr * working_Hrs;
 		return dailyWage;
 
