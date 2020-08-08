@@ -4,6 +4,11 @@ public class EmployeeWageCompute{
 	private int total_Work_Day;
 	private int working_Hrs;
 	private int totalWage;
+	private int dailywage;
+
+	public int getDailywage(){
+		return dailywage;
+	}
 
 	public String getCompany(){
 		return company;
