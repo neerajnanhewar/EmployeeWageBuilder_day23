@@ -9,6 +9,9 @@ public class EmployeeWageCompute{
 	public int getDailywage(){
 		return dailywage;
 	}
+	public void setDailywage(int dailywage){
+		this.dailywage = dailywage;
+	}
 
 	public String getCompany(){
 		return company;

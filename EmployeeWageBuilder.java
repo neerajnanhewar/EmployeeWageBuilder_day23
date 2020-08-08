@@ -14,6 +14,7 @@ class EmployeeWageBuilder implements IEmpWage{
 		for(int i =0;i<companyEmpWageList.size();i++) {
 		EmployeeWageCompute employeeWageCompute = companyEmpWageList.get(i);
 		employeeWageCompute.setTotalWage(this.monthlyWageCompute(employeeWageCompute));
+		System.out.println("dailyWage for" + employeeWageCompute.getCompany() + "is" + employeeWageCompute.getDailywage());
 		System.out.println(employeeWageCompute);
 		}
 	}
@@ -60,6 +61,7 @@ public static void welcome(){
 	public static int monthlyWageCompute(EmployeeWageCompute employeeWageCompute) {
 
 		int dailyWage = dailyWageCompute(employeeWageCompute.getworking_Hrs(), employeeWageCompute.getEmp_Rate_PerHr());
+		employeeWageCompute.setDailywage(dailyWage);
 		return dailyWage * employeeWageCompute.gettotal_Work_Day();
 	}	
 			
